@@ -13,25 +13,18 @@ build-packages:
 apps:
     dart:
         command: bin/dart
-        aliases: [dart]
     dart2js:
         command: bin/dart2js
-        aliases: [dart2js]
     dartanalyzer:
         command: bin/dartanalyzer
-        aliases: [dartanalyzer]
     dartdevc:
         command: bin/dartdevc
-        aliases: [dartdevc]
     dartdoc:
         command: bin/dartdoc
-        aliases: [dartdoc]
     dartfmt:
         command: bin/dartfmt
-        aliases: [dartfmt]
     pub:
         command: bin/pub
-        aliases: [pub]
 
 parts:
   dart:
