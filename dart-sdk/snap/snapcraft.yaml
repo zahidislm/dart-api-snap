@@ -1,0 +1,65 @@
+name: dart-sdk
+version: 2.2.0
+summary: Dart Language SDK
+description: >
+  This includes the Dart SDK and tools such as dartfmt, pub, etc. For more information on the Dart Language, please visit www.dartlang.org
+
+grade: stable
+confinement: classic
+
+build-packages:
+  - unzip
+
+apps:
+    dart:
+        command: bin/dart
+        aliases: [dart]
+    dart2js:
+        command: bin/dart2js
+        aliases: [dart2js]
+    dartanalyzer:
+        command: bin/dartanalyzer
+        aliases: [dartanalyzer]
+    dartdevc:
+        command: bin/dartdevc
+        aliases: [dartdevc]
+    dartdoc:
+        command: bin/dartdoc
+        aliases: [dartdoc]
+    dartfmt:
+        command: bin/dartfmt
+        aliases: [dartfmt]
+    pub:
+        command: bin/pub
+        aliases: [pub]
+
+parts:
+  dart:
+    plugin: nil
+    override-build: |
+      DART_URL_BASE="https://storage.googleapis.com/dart-archive/channels/stable/release/$SNAPCRAFT_PROJECT_VERSION/sdk/"
+      DART_ZIP=dartsdk-linux-x64-release.zip
+      DART_DIRECTORY=dart-sdk
+      DOWNLOADS_DIRECTORY=${SNAPCRAFT_STAGE}/../downloads
+      DART_ZIP_PATH="${DOWNLOADS_DIRECTORY}/${DART_ZIP}"
+
+      mkdir -p "$DOWNLOADS_DIRECTORY"
+
+      if ! [ -f "${DART_ZIP_PATH}" ]; then
+        echo "Downloading Dart-SDK into ${DOWNLOADS_DIRECTORY}"
+        wget ${DART_URL_BASE}${DART_ZIP} -O ${DART_ZIP_PATH}
+      else
+        echo "Reusing ${DART_ZIP_PATH}"
+      fi
+
+      echo "Unpacking ${DART_ZIP_PATH}\n into `pwd`"
+      unzip -q ${DART_ZIP_PATH}
+      chmod -R 775 ${DART_DIRECTORY}/bin
+      mv ${DART_DIRECTORY}/* $SNAPCRAFT_PART_INSTALL/
+      rmdir ${DART_DIRECTORY}
+
+
+
+
+
+
